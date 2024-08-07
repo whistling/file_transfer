@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package file_transfer;
+
+option go_package = "idl/file_transfer;file_transfer";
+
+service FileTransfer {
+  rpc UploadFile(stream Chunk) returns (UploadResponse);
+}
+
+message Chunk {
+  bytes data = 1; // 每个chunk的数据部分
+  int64 offset = 2; // 块在文件中的偏移量
+  int32 chunk_size = 3; // 当前chunk的大小
+}
+
+message UploadResponse {
+  bool success = 1; // 上传是否成功
+  string message = 2; // 可选的反馈信息
+}
